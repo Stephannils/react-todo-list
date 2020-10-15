@@ -1,0 +1,14 @@
+button{
+  float: right;
+  text-align: right;
+}
+
+.Todo-x {
+  font-size: smaller;
+  color: red
+}
+
+.Todo-edit {
+  font-size: smaller;
+  color: orange
+}
