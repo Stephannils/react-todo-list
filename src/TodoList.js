@@ -32,25 +32,42 @@ class TodoList extends Component {
     });
   };
 
+  toggleCompletion = (id) => {
+    const updatedTodoList = this.state.todoList.map((todo) => {
+      if (todo.id === id) {
+        return { ...todo, completed: !todo.completed };
+      }
+      return todo;
+    });
+    this.setState({
+      todoList: updatedTodoList,
+    });
+  };
+
   render() {
-    const list = this.state.todoList.map((i) => (
-      <li key={i.id}>
+    const list = this.state.todoList.map((todo) => (
+      <li key={todo.id}>
         <Todo
-          taskName={i.taskName}
-          key={i.id}
-          id={i.id}
+          taskName={todo.taskName}
+          key={todo.id}
+          id={todo.id}
+          completed={todo.completed}
           removeTodo={this.remove}
           updateTodo={this.update}
+          completeTodo={this.toggleCompletion}
         />
       </li>
     ));
     return (
       <div className="TodoList">
-        <h1>To-Do List</h1>
-        <NewTodoForm createTodo={this.create} />
-        {this.state.todoList.length > 0 && (
+        <h1>
+          React todo List <span>Getting stuff done</span>
+        </h1>
+        {/* {this.state.todoList.length > 0 && (
           <ul className="TodoList-Tasks">{list}</ul>
-        )}
+        )} */}
+        <ul className="TodoList-Tasks">{list}</ul>
+        <NewTodoForm createTodo={this.create} />
       </div>
     );
   }

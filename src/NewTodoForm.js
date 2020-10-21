@@ -15,7 +15,7 @@ class NewTodoForm extends Component {
 
   handleSubmit = (e) => {
     if (this.state.taskName !== '') {
-      const newTodo = { ...this.state, id: uuid() };
+      const newTodo = { ...this.state, id: uuid(), completed: false };
       this.props.createTodo(newTodo);
       this.setState({
         taskName: '',
