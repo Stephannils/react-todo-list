@@ -26,6 +26,9 @@
   cursor: pointer;
   color: #fff;
 }
+.Todo-buttons button:hover {
+  color: orange;
+}
 
 .Todo-edit-form {
   display: flex;
