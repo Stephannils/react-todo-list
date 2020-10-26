@@ -18,18 +18,24 @@ class TodoList extends Component {
     this.setState({
       todoList: updatedTodoList,
     });
+    this.saveToLocalStorage(updatedTodoList);
   };
 
   create = (newTodo) => {
     this.setState({
       todoList: [...this.state.todoList, newTodo],
     });
+    this.saveToLocalStorage([...this.state.todoList, newTodo]);
   };
 
   remove = (id) => {
+    const updatedTodoList = this.state.todoList.filter(
+      (todo) => todo.id !== id
+    );
     this.setState({
-      todoList: this.state.todoList.filter((todo) => todo.id !== id),
+      todoList: updatedTodoList,
     });
+    this.saveToLocalStorage(updatedTodoList);
   };
 
   toggleCompletion = (id) => {
@@ -42,6 +48,32 @@ class TodoList extends Component {
     this.setState({
       todoList: updatedTodoList,
     });
+    this.saveToLocalStorage(updatedTodoList);
+  };
+
+  initLocalStorage = () => {
+    let tasks;
+    if (localStorage.getItem('todoList') === null) {
+      tasks = [];
+    } else {
+      tasks = JSON.parse(localStorage.getItem('todoList'));
+    }
+    return tasks;
+  };
+
+  saveToLocalStorage = (todoList, newTodo) => {
+    localStorage.setItem('todoList', JSON.stringify(todoList, newTodo));
+  };
+
+  getTodos = () => {
+    const tasks = this.initLocalStorage();
+    this.setState({
+      todoList: tasks,
+    });
+  };
+
+  componentDidMount = () => {
+    this.getTodos();
   };
 
   render() {
@@ -63,9 +95,6 @@ class TodoList extends Component {
         <h1>
           React todo List <span>Getting stuff done</span>
         </h1>
-        {/* {this.state.todoList.length > 0 && (
-          <ul className="TodoList-Tasks">{list}</ul>
-        )} */}
         <ul className="TodoList-Tasks">{list}</ul>
         <NewTodoForm createTodo={this.create} />
       </div>
